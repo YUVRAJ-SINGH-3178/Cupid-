@@ -29,7 +29,7 @@ export const NavBar = ({ active, setTab, currentUser, onOpenProfile, onCreateVib
     return (
         <>
             {/* DESKTOP NAV: Floating Vertical Dock */}
-            <div className="fixed left-6 top-0 bottom-0 flex flex-col justify-center pointer-events-none z-50">
+            <div className="hidden lg:flex fixed left-6 top-0 bottom-0 flex-col justify-center pointer-events-none z-50">
                 <nav role="navigation" aria-label="Main navigation" className={cn("pointer-events-auto flex flex-col gap-5 items-center bg-card backdrop-blur-2xl border border-border p-3 shadow-2xl obsidian-card transition-all duration-300", theme.navShape)}>
 
                     {/* APP LOGO */}
