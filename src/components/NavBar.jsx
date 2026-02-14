@@ -19,11 +19,12 @@ export const NavBar = ({ active, setTab, currentUser, onOpenProfile, onCreateVib
 
     const navItems = [
         { id: 'dashboard', icon: theme.navIcons.home, label: 'Home' },
-        { id: 'map', icon: theme.navIcons.map, label: 'Map' },
+        { id: 'map', icon: theme.navIcons.map, label: 'Map', desktopOnly: true },
         { id: 'tribe', icon: Sparkles, label: 'Tribe' },
         { id: 'create', icon: theme.navIcons.create, label: 'Vibe', isAction: true },
         { id: 'social', icon: theme.navIcons.social, label: 'Social' },
         { id: 'chat', icon: theme.navIcons.chat, label: 'Chat' },
+        { id: 'settings', icon: theme.navIcons.settings, label: 'Settings', mobileOnly: true },
     ];
 
     return (
@@ -57,7 +58,7 @@ export const NavBar = ({ active, setTab, currentUser, onOpenProfile, onCreateVib
 
                     {/* Main Items */}
                     <div className="flex flex-col gap-2">
-                        {navItems.filter(i => !i.isAction).map((item) => {
+                        {navItems.filter(i => !i.isAction && !i.mobileOnly).map((item) => {
                             const isActive = active === item.id;
                             return (
                                 <button
@@ -118,17 +119,34 @@ export const NavBar = ({ active, setTab, currentUser, onOpenProfile, onCreateVib
 
 
             {/* MOBILE NAV: Floating Glass Bar */}
-            <nav role="navigation" aria-label="Mobile navigation" className={cn("fixed bottom-4 left-4 right-4 h-20 bg-card/90 backdrop-blur-3xl border border-border flex items-center justify-between px-4 sm:px-6 lg:hidden z-50 shadow-2xl obsidian-card overflow-visible safe-bottom", theme.mobileNavShape)}>
-                {navItems.map((item) => {
+            <nav role="navigation" aria-label="Mobile navigation" className={cn("fixed bottom-4 left-4 right-4 h-20 bg-card/90 backdrop-blur-3xl border border-border flex items-center gap-2 px-3 sm:px-4 lg:hidden z-50 shadow-2xl obsidian-card overflow-visible safe-bottom", theme.mobileNavShape)}>
+                {/* Profile Avatar on Mobile */}
+                <button
+                    onClick={onOpenProfile}
+                    className="flex-shrink-0 relative w-10 h-10 rounded-full overflow-hidden border-2 border-border active:scale-95 transition-transform"
+                >
+                    <img
+                        src={currentUser?.avatar_url || `https://api.dicebear.com/7.x/notionists/svg?seed=${currentUser?.username || 'user'}`}
+                        alt="Profile"
+                        className="w-full h-full object-cover bg-background"
+                    />
+                </button>
+
+                {/* Nav Items Container */}
+                <div className="flex-1 flex items-center justify-around">
+                    {navItems.map((item) => {
+                    // Skip desktop-only items on mobile
+                    if (item.desktopOnly) return null;
+
                     if (item.isAction) {
                         return (
                             <div key={item.id} className="relative -top-6">
                                 <button
                                     onClick={onCreateVibe}
-                                    className="w-16 h-16 bg-background rounded-full flex items-center justify-center border-4 border-background shadow-xl relative overflow-hidden group"
+                                    className="w-14 h-14 bg-background rounded-full flex items-center justify-center border-4 border-background shadow-xl relative overflow-hidden group"
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-tr from-vibe-purple to-vibe-cyan opacity-100 group-hover:opacity-90 transition-opacity" />
-                                    <theme.navIcons.create className="w-8 h-8 text-white relative z-10" />
+                                    <theme.navIcons.create className="w-7 h-7 text-white relative z-10" />
                                 </button>
                             </div>
                         );
@@ -139,13 +157,13 @@ export const NavBar = ({ active, setTab, currentUser, onOpenProfile, onCreateVib
                         <button
                             key={item.id}
                             onClick={() => setTab(item.id)}
-                            className="flex flex-col items-center gap-1 group"
+                            className="flex flex-col items-center gap-1 group flex-shrink-0"
                         >
                             <div className={cn(
-                                "p-2 rounded-xl transition-all duration-300 relative",
+                                "p-1.5 rounded-xl transition-all duration-300 relative",
                                 isActive ? "text-white" : "text-gray-500 group-hover:text-gray-300"
                             )}>
-                                <item.icon strokeWidth={isActive ? 2.5 : 2} className="w-6 h-6" />
+                                <item.icon strokeWidth={isActive ? 2.5 : 2} className="w-5 h-5" />
                                 {isActive && (
                                     <motion.div
                                         layoutId="mobile-active"
@@ -156,6 +174,7 @@ export const NavBar = ({ active, setTab, currentUser, onOpenProfile, onCreateVib
                         </button>
                     );
                 })}
+                </div>
             </nav>
         </>
     );
