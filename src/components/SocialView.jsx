@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Users, MessageSquare, Search, MapPin, Zap, Music, Crown } from 'lucide-react';
+import { Users, MessageSquare, Search, MapPin, Zap, Music, Crown, Trash2 } from 'lucide-react';
 import { cn, SQUAD_MEMBERS } from '../utils/constants';
 import { useTheme } from '../ThemeContext';
 
-export const SocialView = ({ events, onChatWith, onJoinEvent, onOpenEventChat, currentUser }) => {
+export const SocialView = ({ events, onChatWith, onJoinEvent, onOpenEventChat, onDeleteEvent, currentUser }) => {
     const { theme } = useTheme();
 
     return (
@@ -145,7 +145,7 @@ export const SocialView = ({ events, onChatWith, onJoinEvent, onOpenEventChat, c
 
                         <div className="flex gap-2">
                             <button
-                                onClick={() => onJoinEvent?.(event)}
+                                onClick={() => onJoinEvent?.(event.id)}
                                 className="flex-1 py-2 rounded-xl bg-[var(--text-primary)] text-[var(--bg-page)] text-xs font-bold hover:opacity-90 transition shadow-lg shadow-[var(--accent-primary)]/20"
                             >
                                 Join Vibe
@@ -156,6 +156,15 @@ export const SocialView = ({ events, onChatWith, onJoinEvent, onOpenEventChat, c
                             >
                                 <MessageSquare className="w-4 h-4" />
                             </button>
+                            {currentUser?.id === event.creator_id && (
+                                <button
+                                    onClick={() => onDeleteEvent?.(event.id)}
+                                    className="w-10 py-2 rounded-xl bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white transition flex items-center justify-center"
+                                    title="Delete Event"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                </button>
+                            )}
                         </div>
                     </motion.div>
                 ))}

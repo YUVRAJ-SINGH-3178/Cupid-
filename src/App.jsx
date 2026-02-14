@@ -181,8 +181,9 @@ export default function App() {
     }
   };
 
-  const handleJoinEvent = async (eventId) => {
+  const handleJoinEvent = async (eventData) => {
     if (!currentUser) return setShowAuthModal(true);
+    const eventId = eventData?.id || eventData;
     try {
       const event = eventsData.find(e => e.id === eventId);
       await events.join(eventId);
@@ -198,6 +199,24 @@ export default function App() {
       fetchEvents();
     } catch (e) {
       addNotification('Could not join vibe', 'error');
+      console.error(e);
+    }
+  };
+
+  const handleDeleteEvent = async (eventId) => {
+    if (!currentUser) return setShowAuthModal(true);
+    try {
+      const event = eventsData.find(e => e.id === eventId);
+      if (event.creator_id !== currentUser.id) {
+        addNotification('Only event creator can delete', 'error');
+        return;
+      }
+      await events.delete(eventId);
+      addNotification('Event deleted successfully');
+      fetchEvents();
+    } catch (e) {
+      addNotification('Could not delete event', 'error');
+      console.error(e);
     }
   };
 
@@ -388,7 +407,7 @@ export default function App() {
               )}
               {activeTab === 'social' && (
                 <div className="pt-20 lg:pt-10 px-4 h-full w-full max-w-[1600px] mx-auto">
-                  <SocialView events={eventsData} onChatWith={handleChatWith} onJoinEvent={handleJoinEvent} onOpenEventChat={openEventChat} currentUser={currentUser} />
+                  <SocialView events={eventsData} onChatWith={handleChatWith} onJoinEvent={handleJoinEvent} onOpenEventChat={openEventChat} onDeleteEvent={handleDeleteEvent} currentUser={currentUser} />
                 </div>
               )}
               {activeTab === 'chat' && (
