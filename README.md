@@ -1,10 +1,10 @@
-# VibeSRM - The Ultimate Campus Experience Platform
+# Cupid - The Ultimate Campus Experience Platform
 
 > **"Neon Streets. Digital Souls."**
 
-VibeSRM is a futuristic, collaborative campus dashboard designed to gamify and streamline the student experience at SRM AP. It combines real-time location tracking, social connectivity, event management, and immersive theming into a single, high-performance web application.
+Cupid is a futuristic, collaborative campus dashboard designed to gamify and streamline the student experience at SRM AP. It combines real-time location tracking, social connectivity, event management, and immersive theming into a single, high-performance web application.
 
-![VibeSRM Banner](https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=2000)
+![Cupid Banner](https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=2000)
 
 ## 🌟 Key Features
 
@@ -47,8 +47,8 @@ Experience the campus through four distinct personalities. The entire UI—color
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/VibeSRM.git
-    cd VibeSRM
+    git clone https://github.com/YUVRAJ-SINGH-3178/Cupid-.git
+    cd VibeSRM-main
     ```
 
 2.  **Install dependencies:**
@@ -72,7 +72,7 @@ Experience the campus through four distinct personalities. The entire UI—color
 ## 📂 Project Structure
 
 ```
-VibeSRM/
+Cupid/
 ├── src/
 │   ├── components/         # UI Components (Dashboard, Map, Auth, etc.)
 │   ├── utils/
@@ -102,19 +102,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 🤖 AI Tools & Prompting Strategy
-VibeSRM was built using **Antigravity (Advanced Agentic AI Assistant)** for pair programming and iterative UI design.
-
-**Prompting Strategy Summary:**
-1.  **Aesthetic Priming**: Using descriptive keyword chains like *"high-end glassmorphism"*, *"midnight holographic gradients"*, and *"organic non-AI look"* to set the design tokens.
-2.  **Iterative Refinement**: Building core logic (Supabase integration) first, then layering complex UI overhauls in dedicated steps (e.g., transforming the basic Chat into the "Holographic Nexus").
-3.  **Cross-Context Logic**: Ensuring the AI maintained global state across multiple views (Map, Chat, Social) through incremental file views and structural outlines.
+## 🧭 Product Notes
+Cupid is designed around three principles:
+1.  **Signal Over Noise**: Keep the most important campus signals visible at a glance.
+2.  **Social, Not Spammy**: Encourage connection without overwhelming the user.
+3.  **Playful Utility**: Blend delightful interactions with practical campus workflows.
 
 ---
 
 ## ⚡ Build Reproducibility (Mandatory)
 
-Follow these exact steps to run VibeSRM locally for judging:
+Follow these exact steps to run Cupid locally for judging:
 
 ### 1. Requirements
 Ensure you have **Node.js 18+** (v20+ recommended) and **npm** installed.
@@ -122,8 +120,8 @@ Ensure you have **Node.js 18+** (v20+ recommended) and **npm** installed.
 ### 2. Setup & Installation
 ```bash
 # 1. Clone the nexus
-git clone https://github.com/YUVRAJ-SINGH-3178/VibeSRM.git
-cd VibeSRM
+git clone https://github.com/YUVRAJ-SINGH-3178/Cupid-.git
+cd VibeSRM-main
 
 # 2. Install dependencies
 npm install
@@ -147,7 +145,7 @@ npm run preview
 ---
 
 ## 🔌 Beyond the Code
-VibeSRM is built to be resilient and secure.
+Cupid is built to be resilient and secure.
 - ✅ **Postgres RLS**: Every user's data is isolated and protected.
 - ✅ **Edge Runtime**: Optimized for global, low-latency performance.
 - ✅ **Vibration API**: Subtle haptic feedback for mobile-ready chats.
