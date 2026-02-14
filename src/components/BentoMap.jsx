@@ -65,29 +65,55 @@ export const BentoMap = ({ locations = [], events = [], selected, onSelect, full
     // Map logic
     const normalize = (val) => Math.min(Math.max((val / 1000) * 80 + 10, 10), 90);
     const isLight = themeId === 'valentine' || themeId === 'light' || themeId === 'solar';
+    const isDark = themeId === 'dark' || themeId === 'cyberpunk' || themeId === 'obsidian';
 
     return (
-        <div className={cn("w-full h-full relative overflow-hidden bg-[var(--bg-card)]", !fullScreen && "rounded-[2.5rem] border border-[var(--border-color)]")}>
+        <div className={cn("w-full h-full relative overflow-hidden", !fullScreen && "rounded-[2.5rem] border border-[var(--border-color)]")}>
 
-            {/* 1. REALISTIC DARK MAP BACKGROUND */}
+            {/* 1. ADAPTIVE BACKGROUND FOR ALL THEMES */}
             <div className="absolute inset-0 z-0">
-                {/* Fallback pattern */}
+                {/* Base background */}
                 <div className="absolute inset-0 bg-[var(--bg-page)]" />
 
-                {/* Map Image Layer - Dark Themes Only */}
-                {!isLight && (
+                {/* Dark themes: Realistic dark map */}
+                {isDark && (
                     <img
                         src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
                         className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay"
-                        alt="SRM AP Map Background"
+                        alt="Map Background"
                     />
                 )}
 
-                {/* Overlay Gradient for Fade */}
-                <div className="absolute inset-0 bg-radial-gradient from-transparent via-[var(--bg-page)]/50 to-[var(--bg-page)]" />
+                {/* Light themes: Bright, clean map pattern */}
+                {isLight && (
+                    <>
+                        <img
+                            src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2072&auto=format&fit=crop"
+                            className="absolute inset-0 w-full h-full object-cover opacity-20"
+                            alt="Map Background"
+                        />
+                        {/* Add subtle grid pattern for light themes */}
+                        <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+                                </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#grid)" />
+                        </svg>
+                    </>
+                )}
+
+                {/* Vaporwave: Gradient mesh */}
+                {themeId === 'vaporwave' && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-400/30 via-transparent to-pink-300/30" />
+                )}
+
+                {/* Overlay Gradient for consistency */}
+                <div className="absolute inset-0 bg-radial-gradient from-transparent via-[var(--bg-page)]/30 to-[var(--bg-page)]/60" />
 
                 {/* Tactical Grid Overlay */}
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay" />
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 mix-blend-overlay" />
             </div>
 
             {/* 2. MAP MARKERS LAYER */}
@@ -123,8 +149,8 @@ export const BentoMap = ({ locations = [], events = [], selected, onSelect, full
                                 <Zap className="w-6 h-6 text-white" />
                             </div>
                         </div>
-                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 bg-black/80 rounded border border-amber-500/30 whitespace-nowrap">
-                            <span className="text-[10px] font-bold text-amber-400 uppercase">Event</span>
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-2 py-1 bg-[var(--bg-card)] border border-[var(--border-color)] rounded whitespace-nowrap shadow-xl backdrop-blur-md">
+                            <span className="text-[10px] font-bold text-[var(--accent-secondary)] uppercase">Event</span>
                         </div>
                     </motion.div>
                 ))}

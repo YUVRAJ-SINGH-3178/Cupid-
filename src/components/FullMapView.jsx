@@ -219,7 +219,7 @@ export const FullMapView = ({ locations, events, selected, onSelect }) => {
                         <div className="p-6 pt-24 md:pt-6 border-b border-[var(--border-color)] flex items-center justify-between bg-[var(--bg-card)]/50">
                             <div>
                                 <h3 className="text-lg font-bold text-[var(--text-primary)] flex items-center gap-2">
-                                    {selected.type === 'event' ? <Calendar className="w-5 h-5 text-amber-400" /> : <MapPin className="w-5 h-5 text-blue-400" />}
+                                    {selected.type === 'event' ? <Calendar className="w-5 h-5 text-[var(--accent-secondary)]" /> : <MapPin className="w-5 h-5 text-[var(--accent-primary)]" />}
                                     {selected.type === 'event' ? 'Event Details' : 'Location Details'}
                                 </h3>
                                 <p className="text-xs text-[var(--text-secondary)] mt-1">{selected.type === 'event' ? 'Active Event' : 'Campus Location'}</p>
@@ -324,7 +324,7 @@ export const FullMapView = ({ locations, events, selected, onSelect }) => {
 
             {/* Improved Heatmap Overlay */}
             {showHeatmap && (
-                <div className="absolute inset-0 pointer-events-none z-10 opacity-70">
+                <div className="absolute inset-0 pointer-events-none z-10" style={{ opacity: themeId === 'light' || themeId === 'solar' ? 0.9 : 0.7 }}>
                     {/* Render occupancy-based heatmap circles */}
                     {locations.map((loc) => {
                         const normalize = (val) => Math.min(Math.max((val / 1000) * 80 + 10, 10), 90);
@@ -332,6 +332,9 @@ export const FullMapView = ({ locations, events, selected, onSelect }) => {
                         const y = normalize(loc.coords?.y || 500);
                         const occupancy = loc.occupancy || 50;
                         const intensity = occupancy / 100;
+                        
+                        // Adjust opacity for light themes
+                        const opacityMultiplier = (themeId === 'light' || themeId === 'solar') ? 0.6 : 1;
                         
                         return (
                             <div
@@ -344,10 +347,10 @@ export const FullMapView = ({ locations, events, selected, onSelect }) => {
                                     width: `${200 + occupancy * 2}px`,
                                     height: `${200 + occupancy * 2}px`,
                                     backgroundColor: occupancy > 70 
-                                        ? `rgba(244, 63, 94, ${intensity * 0.4})` 
+                                        ? `rgba(244, 63, 94, ${intensity * 0.4 * opacityMultiplier})` 
                                         : occupancy > 40 
-                                        ? `rgba(245, 158, 11, ${intensity * 0.3})` 
-                                        : `rgba(16, 185, 129, ${intensity * 0.25})`,
+                                        ? `rgba(245, 158, 11, ${intensity * 0.3 * opacityMultiplier})` 
+                                        : `rgba(16, 185, 129, ${intensity * 0.25 * opacityMultiplier})`,
                                 }}
                             />
                         );
